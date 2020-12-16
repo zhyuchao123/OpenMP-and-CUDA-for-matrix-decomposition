@@ -1,0 +1,28 @@
+#!/bin/bash
+#PBS -q normal
+#PBS -j oe
+#PBS -l walltime=00:05:00,mem=8GB
+#PBS -l wd
+#PBS -l ncpus=48
+
+module load intel-compiler intel-mkl
+
+N=5000 # probably want to use something bigger!
+wT=16  # ditto
+ps='6 12 24 48' # note that for $p<48, we still pay for all ncpus=48!!
+
+for p in $ps; do
+    for opt in "" "-R" ; do
+	if [ "$opt" = '""' ] ; then
+	    opt=
+	fi   
+	echo ""
+	cmd=./testCholesky
+	echo OMP_NUM_THREADS=$p $cmd $opt $N $wT
+	OMP_NUM_THREADS=$p $cmd $opt $N $wT
+    done
+done
+
+if [ ! -z "$PBS_NODEFILE" ] ; then
+    cat $PBS_NODEFILE
+fi

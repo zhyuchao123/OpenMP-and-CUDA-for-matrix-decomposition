@@ -1,0 +1,6 @@
+make clean
+make MKL_LIB=parallel
+mv testCholesky testCholesky_parMKL
+make clean
+MKL_NUM_THREADS=8 ./testCholesky_parMKL 1000
+

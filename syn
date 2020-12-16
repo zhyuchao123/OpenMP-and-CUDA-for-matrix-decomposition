@@ -1,0 +1,1 @@
+ rsync -a /run/media/zyc/Files/comp8300/ps20-ass2 yz7050@gadi.nci.org.au:/home/659/yz7050
